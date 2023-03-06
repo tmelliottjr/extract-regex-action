@@ -1,4 +1,6 @@
 {
+  "name": "extract-regex-action",
+  "version": "1.0.0",
   "type": "module",
   "devDependencies": {
     "@actions/core": "^1.10.0",
