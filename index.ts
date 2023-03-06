@@ -37,8 +37,10 @@ export function run(options: {
       return;
     }
 
-    core.setOutput("resultString", result.join(" ").trim());
-    core.setOutput("result", result);
+    const trimmedResult = result.map((r) => r.trim());
+
+    core.setOutput("resultString", trimmedResult.join(" "));
+    core.setOutput("resultArray", trimmedResult);
   } catch (error) {
     core.setFailed(`An error occurred: ${error}`);
   }
