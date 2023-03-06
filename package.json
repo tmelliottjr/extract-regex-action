@@ -14,5 +14,10 @@
     "build": "tsc",
     "test": "vitest",
     "ts": "ts-node"
+  },
+  "release": {
+    "branches": [
+      "main"
+    ]
   }
 }
