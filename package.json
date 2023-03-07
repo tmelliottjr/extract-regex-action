@@ -16,7 +16,7 @@
   },
   "scripts": {
     "build": "tsc",
-    "package": "ncc build",
+    "package": "ncc build --source-map --license licenses.txt",
     "test": "vitest",
     "ts": "ts-node"
   },
