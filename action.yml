@@ -1,5 +1,8 @@
-name: "Extract Regex"
+name: "Extract Regex Action"
 description: "A GitHub Action to extract a regex pattern from a string"
+branding:
+  icon: "code"
+  color: "purple"
 inputs:
   regex:
     description: "The regex pattern to extract"
