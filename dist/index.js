@@ -1,4 +1,4 @@
-import './sourcemap-register.cjs';import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
+import { createRequire as __WEBPACK_EXTERNAL_createRequire } from "module";
 /******/ var __webpack_modules__ = ({
 
 /***/ 351:
@@ -1716,6 +1716,10 @@ function checkBypass(reqUrl) {
     if (!reqUrl.hostname) {
         return false;
     }
+    const reqHost = reqUrl.hostname;
+    if (isLoopbackAddress(reqHost)) {
+        return true;
+    }
     const noProxy = process.env['no_proxy'] || process.env['NO_PROXY'] || '';
     if (!noProxy) {
         return false;
@@ -1741,13 +1745,24 @@ function checkBypass(reqUrl) {
         .split(',')
         .map(x => x.trim().toUpperCase())
         .filter(x => x)) {
-        if (upperReqHosts.some(x => x === upperNoProxyItem)) {
+        if (upperNoProxyItem === '*' ||
+            upperReqHosts.some(x => x === upperNoProxyItem ||
+                x.endsWith(`.${upperNoProxyItem}`) ||
+                (upperNoProxyItem.startsWith('.') &&
+                    x.endsWith(`${upperNoProxyItem}`)))) {
             return true;
         }
     }
     return false;
 }
 exports.checkBypass = checkBypass;
+function isLoopbackAddress(host) {
+    const hostLower = host.toLowerCase();
+    return (hostLower === 'localhost' ||
+        hostLower.startsWith('127.') ||
+        hostLower.startsWith('[::1]') ||
+        hostLower.startsWith('[0:0:0:0:0:0:0:1]'));
+}
 //# sourceMappingURL=proxy.js.map
 
 /***/ }),
@@ -2772,18 +2787,6 @@ module.exports = __WEBPACK_EXTERNAL_createRequire(import.meta.url)("util");
 /******/ }
 /******/ 
 /************************************************************************/
-/******/ /* webpack/runtime/compat get default export */
-/******/ (() => {
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__nccwpck_require__.n = (module) => {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			() => (module['default']) :
-/******/ 			() => (module);
-/******/ 		__nccwpck_require__.d(getter, { a: getter });
-/******/ 		return getter;
-/******/ 	};
-/******/ })();
-/******/ 
 /******/ /* webpack/runtime/define property getters */
 /******/ (() => {
 /******/ 	// define getter functions for harmony exports
@@ -2813,13 +2816,12 @@ var __webpack_exports__ = {};
 /* harmony export */   "K": () => (/* binding */ run)
 /* harmony export */ });
 /* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0__ = __nccwpck_require__(186);
-/* harmony import */ var _actions_core__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__nccwpck_require__.n(_actions_core__WEBPACK_IMPORTED_MODULE_0__);
 
 if (import.meta.url.endsWith(process.argv[1])) {
-    const userRegex = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput("regex");
-    const flags = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput("flags");
-    const input = _actions_core__WEBPACK_IMPORTED_MODULE_0___default().getInput("input");
-    run({ core: (_actions_core__WEBPACK_IMPORTED_MODULE_0___default()), userRegex, flags, input });
+    const userRegex = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("regex");
+    const flags = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("flags");
+    const input = _actions_core__WEBPACK_IMPORTED_MODULE_0__.getInput("input");
+    run({ core: _actions_core__WEBPACK_IMPORTED_MODULE_0__, userRegex, flags, input });
 }
 function run(options) {
     const { core, userRegex, flags, input } = options;
@@ -2851,5 +2853,3 @@ function run(options) {
 
 var __webpack_exports__run = __webpack_exports__.K;
 export { __webpack_exports__run as run };
-
-//# sourceMappingURL=index.js.map
