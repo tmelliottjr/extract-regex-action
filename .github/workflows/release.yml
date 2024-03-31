@@ -4,11 +4,13 @@ permissions:
   contents: write
 
 on:
+  workflow_dispatch: {}
   push:
     branches:
       - main
     paths-ignore:
       - "**.md"
+    
 jobs:
   release:
     name: Release
