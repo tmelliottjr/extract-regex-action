@@ -19,5 +19,5 @@ outputs:
   resultArray:
     description: "The extracted matches as an array"
 runs:
-  using: "node16"
+  using: "node20"
   main: "dist/index.js"
