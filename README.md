@@ -6,7 +6,7 @@ This action extracts a regex pattern from an input string and outputs it as an e
 
 ```yaml
 - name: Extract status from comment
-  uses: tmelliottjr/extract-regex-action@v1.4.0
+  uses: tmelliottjr/extract-regex-action@<version>
   id: status
   with:
     regex: '(?<=### Status\s).*?(?=\s*###)'
